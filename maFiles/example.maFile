@@ -1,0 +1,22 @@
+{
+    "shared_secret": "",
+    "serial_number": "",
+    "revocation_code": "",
+    "uri": "",
+    "server_time": 0,
+    "account_name": "",
+    "token_gid": "",
+    "identity_secret": "",
+    "secret_1": "",
+    "status": 0,
+    "device_id": "",
+    "fully_enrolled": true,
+    "Session": {
+        "SessionID": "",
+        "SteamLogin": "",
+        "SteamLoginSecure": "",
+        "WebCookie": "",
+        "OAuthToken": "",
+        "SteamID": 0
+    }
+}
