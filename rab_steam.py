@@ -12,6 +12,7 @@
 import configparser
 from modules import chat
 from modules import guard
+from modules import offer
 
 
 """
@@ -56,9 +57,11 @@ class r_steam():
         self.market = None
         # Steam Offer 报价类
         self.offer = None
+        # Steam API 语言
+        self._language = "english"
     
     """
-    @description: 根据 config.ini 配置文件对子模块进行初始化
+    @description: 根据 config.ini 配置文件进行初始化（包括模块和其他语言设置等）
     -------
     @param:
     -------
@@ -68,11 +71,23 @@ class r_steam():
         # 读取配置文件
         config = configparser.ConfigParser()
         config.read("config.ini", encoding="utf-8")
+        # 基础信息初始化
+        # Steam API 语言
+        self._language = config.get("api config", "language")
+        # 子模块初始化
         # Steam Chat 聊天模块
         if (config.get("moudule to enable", "chat").lower() == "true"):
             self.chat = chat.r_steam_chat()
         # Steam Guard 令牌模块
         self.guard = guard.r_steam_guard(self._steam_id)
+        # Steam Info 账户信息模块
+        # self.info = info.r_steam_info()
+        # Steam Login 登录模块
+        # self.login = login.r_steam_login()
+        # Steam Maket 市场模块
+        # self.market = login.r_steam_market()
+        # Steam Offer 报价模块
+        self.offer = offer.r_steam_offer(self._api_key, self._language)
 
 
 """
@@ -83,8 +98,4 @@ class r_steam():
 @return:
 """
 if __name__ == "__main__":
-    r_steam = r_steam("", "2", "3")
-    r_steam.init()
-    print(r_steam.guard._shared_secret)
-    print(r_steam.guard._identity_secret)
-    print(r_steam.guard.get_one_time_code())
+    pass
