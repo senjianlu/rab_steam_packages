@@ -6,4 +6,20 @@
 # @DATE: 2021/05/24 周一
 # @TIME: 08:44:02
 #
-# @DESCRIPTION: todo...
+# @DESCRIPTION: API 模块测试
+
+
+import sys
+sys.path.append("..")
+import accounts
+
+
+"""
+@description: 测试用类初始化和测试入口
+-------
+@param:
+-------
+@return:
+"""
+if __name__ == "__main__":
+    pass

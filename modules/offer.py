@@ -11,6 +11,9 @@
 
 import json
 import requests
+import sys
+sys.path.append("..")
+from modules import api
 
 
 """
@@ -59,7 +62,7 @@ class r_steam_offer():
             "historical_only": historical_only,
             "time_historical_cutoff": time_historical_cutoff
         }
-        r = requests.get("https://api.steampowered.com/IEconService/GetTradeOffers/v1", params=params)
+        r = api.call("GET", "IEconService", "GetTradeOffers", "v1", params)
         return json.loads(r.text)
         
     """
@@ -75,7 +78,7 @@ class r_steam_offer():
             "tradeofferid": trade_offer_id,
             "language": self._language
         }
-        r = requests.get("https://api.steampowered.com/IEconService/GetTradeOffer/v1", params=params)
+        r = api.call("GET", "IEconService", "GetTradeOffer", "v1", params)
         return json.loads(r.text)
     
     """
@@ -90,7 +93,7 @@ class r_steam_offer():
             "key": self._api_key,
             "tradeofferid": trade_offer_id
         }
-        r = requests.post("https://api.steampowered.com/IEconService/DeclineTradeOffer/v1", params=params)
+        r = api.call("POST", "IEconService", "DeclineTradeOffer", "v1", params)
         return json.loads(r.text)
     
     """
@@ -105,7 +108,7 @@ class r_steam_offer():
             "key": self._api_key,
             "tradeofferid": trade_offer_id
         }
-        r = requests.post("https://api.steampowered.com/IEconService/CancelTradeOffer/v1", params=params)
+        r = api.call("POST", "IEconService", "CancelTradeOffer", "v1", params)
         return json.loads(r.text)
     
     """
@@ -133,7 +136,5 @@ class r_steam_offer():
             'include_failed': include_failed,
             'include_total': include_total
         }
-        r = requests.get("https://api.steampowered.com/IEconService/GetTradeHistory/v1", params=params)
+        r = api.call("GET", "IEconService", "GetTradeHistory", "v1", params)
         return json.loads(r.text)
-        
-    
