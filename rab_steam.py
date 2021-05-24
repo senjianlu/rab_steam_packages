@@ -12,6 +12,7 @@
 import configparser
 from modules import chat
 from modules import guard
+from modules import login
 from modules import offer
 
 
@@ -80,10 +81,11 @@ class r_steam():
             self.chat = chat.r_steam_chat()
         # Steam Guard 令牌模块
         self.guard = guard.r_steam_guard(self._steam_id)
+        # Steam Login 登录模块
+        self.session = login.r_steam_login(
+            self._username, self._password, self.guard.get_two_factor_code())
         # Steam Info 账户信息模块
         # self.info = info.r_steam_info()
-        # Steam Login 登录模块
-        # self.login = login.r_steam_login()
         # Steam Maket 市场模块
         # self.market = login.r_steam_market()
         # Steam Offer 报价模块

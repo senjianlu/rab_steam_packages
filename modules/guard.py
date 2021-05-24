@@ -34,7 +34,8 @@ def get_value_from_mafile(steam_id, key):
         with open(mafile_path, "r") as mafile:
             return json.loads(mafile.read())[key]
     else:
-        raise Exception("没有找到 Steam 令牌文件！需要文件名：{}.maFile".format(steam_id))
+        raise Exception(
+            "没有找到 Steam 令牌文件！需要文件名：{}.maFile".format(steam_id))
 
 
 """
@@ -55,9 +56,11 @@ class r_steam_guard():
     """
     def __init__(self, steam_id):
         # shared_secret Steam 账户令牌公钥
-        self._shared_secret = get_value_from_mafile(steam_id, "shared_secret")
+        self._shared_secret = get_value_from_mafile(
+            steam_id, "shared_secret")
         # identity_secret Steam 账户私钥
-        self._identity_secret = get_value_from_mafile(steam_id, "identity_secret")
+        self._identity_secret = get_value_from_mafile(
+            steam_id, "identity_secret")
     
     """
     @description: 获取一次性令牌码
@@ -66,7 +69,7 @@ class r_steam_guard():
     -------
     @return:
     """
-    def get_one_time_code(self):
+    def get_two_factor_code(self):
         timestamp = int(time.time())
         # 将时间戳以 Big-Endian, UIit64 类型存放内存 (pack as Big-Endian, UInt64)
         time_buffer = struct.pack(">Q", timestamp//30)
@@ -78,11 +81,9 @@ class r_steam_guard():
         full_code = struct.unpack(
             ">I", time_hmac[begin:begin+4])[0] & 0x7fffffff
         chars = "23456789BCDFGHJKMNPQRTVWXY"
-        one_time_code = ""
+        two_factor_code = ""
         # 拼凑令牌码
         for _ in range(5):
             full_code, i = divmod(full_code, len(chars))
-            one_time_code += chars[i]
-        return one_time_code
-
-        
+            two_factor_code += chars[i]
+        return two_factor_code
