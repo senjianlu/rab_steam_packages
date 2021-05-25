@@ -121,8 +121,8 @@ class r_steam_guard():
     -------
     @return:
     """
-    def generate_confirmation_key(self, tag) -> bytes:
-        buffer = struct.pack(">Q", int(time.time())) + tag.encode("ascii")
+    def generate_confirmation_key(self, tag, timestamp) -> bytes:
+        buffer = struct.pack(">Q", timestamp) + tag.encode("ascii")
         confirmation_key = base64.b64encode(
             hmac.new(base64.b64decode(self._identity_secret),
                      buffer,
@@ -152,11 +152,12 @@ class r_steam_guard():
     @return:
     """
     def generate_params(self, tag):
+        timestamp = int(time.time())
         params = {
             "p": self.generate_device_id(),
             "a": self._steam_id,
-            "k": self.generate_confirmation_key(tag),
-            "t": int(time.time()),
+            "k": self.generate_confirmation_key(tag, timestamp),
+            "t": timestamp,
             "m": "android",
             "tag": tag
         }
@@ -173,7 +174,7 @@ class r_steam_guard():
         # 待确认交易类列表
         confirmations = []
         # 访问该页面所需的对象
-        params = generate_params(tag)
+        params = self.generate_params(tag)
         headers = {
             "X-Requested-With": "com.valvesoftware.android.steam.community"
         }
@@ -215,10 +216,10 @@ class r_steam_guard():
     """
     def get_confirmation_info(self, logined_session, confirmation):
         tag = "details" + confirmation._id
-        params = generate_params(tag)
+        params = self.generate_params(tag)
         response = logined_session.get(
-            api.STEAM.URL.COMMUNITY+"/details/"+confirmation._id, params=params)
-        return json.loads(response)["html"]
+            api.STEAM.URL.COMMUNITY+"/mobileconf/details/"+confirmation._id, params=params)
+        return response.text
 
     """
     @description: 通过待确认交易
@@ -235,8 +236,8 @@ class r_steam_guard():
         params["ck"] = confirmation._data_key
         headers = {"X-Requested-With": "XMLHttpRequest"}
         response = logined_session.get(
-            api.STEAM.URL.COMMUNITY+"/ajaxop", params=params, headers=headers)
-        return json.loads(response)
+            api.STEAM.URL.COMMUNITY+"/mobileconf/ajaxop", params=params, headers=headers)
+        return response.text
     
     """
     @description: 取消待确认交易
@@ -253,6 +254,6 @@ class r_steam_guard():
         params["ck"] = confirmation._data_key
         headers = {"X-Requested-With": "XMLHttpRequest"}
         response = logined_session.get(
-            api.STEAM.URL.COMMUNITY+"/ajaxop", params=params, headers=headers)
-        return json.loads(response)
+            api.STEAM.URL.COMMUNITY+"/mobileconf/ajaxop", params=params, headers=headers)
+        return response.text
 
