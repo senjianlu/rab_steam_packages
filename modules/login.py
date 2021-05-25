@@ -62,7 +62,6 @@ def get_params_for_session_login(username,
     }
     return params
 
-
 """
 @description: 使用 Session 的 Steam 登录
 -------
@@ -86,6 +85,10 @@ def login_by_session(username, password, two_factor_code=None):
     # 登录
     login_response = login_session.post(
         STEAM.URL.STORE+"/login/dologin", data=params)
+    # 执行登录成功后的跳转
+    transfer_parameters = json.loads(login_response.text)["transfer_parameters"]
+    for transfer_url in json.loads(login_response.text)['transfer_urls']:
+        login_session.post(transfer_url, transfer_parameters)
     return login_session
 
 

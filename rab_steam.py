@@ -52,8 +52,8 @@ class r_steam():
         self.guard = None
         # Steam Info 账户信息类
         self.info = None
-        # Steam Login 登录类
-        self.login = None
+        # Steam Login 登录类（暂时不使用类只使用其 Session 登录方法）
+        # self.login = None
         # Steam Maket 市场类
         self.market = None
         # Steam Offer 报价类
@@ -81,8 +81,8 @@ class r_steam():
             self.chat = chat.r_steam_chat()
         # Steam Guard 令牌模块
         self.guard = guard.r_steam_guard(self._steam_id)
-        # Steam Login 登录模块
-        self.session = login.r_steam_login(
+        # Steam Login 登录模块（暂时不使用类只使用其 Session 登录方法）
+        self._session = login.login_by_session(
             self._username, self._password, self.guard.get_two_factor_code())
         # Steam Info 账户信息模块
         # self.info = info.r_steam_info()
@@ -100,4 +100,19 @@ class r_steam():
 @return:
 """
 if __name__ == "__main__":
-    pass
+
+    from modules import api
+    from test import accounts
+
+    # 获取 Steam 私密信息
+    username, password, api_key, steam_id = accounts \
+        .get_private_info_by_steam_id(no=2)
+    r_steam = r_steam(steam_id, username, password, api_key=api_key)
+    r_steam.init()
+    response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
+    if (username.lower() in response.lower()):
+        print("OK")
+        confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
+        print(confirmations)
+    else:
+        print("NG")
