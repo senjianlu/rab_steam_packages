@@ -42,7 +42,7 @@ class STEAM():
     class URL():
         API = "https://api.steampowered.com"
         COMMUNITY = "https://steamcommunity.com"
-        STORE = 'https://store.steampowered.com'
+        STORE = "https://store.steampowered.com"
 
 
 """

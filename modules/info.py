@@ -7,3 +7,14 @@
 # @TIME: 16:46:52
 #
 # @DESCRIPTION: Steam 账户信息模块
+
+
+"""
+@description: Steam 账户信息类
+-------
+@param:
+-------
+@return:
+"""
+class r_steam_info():
+    pass
