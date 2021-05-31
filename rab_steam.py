@@ -105,15 +105,18 @@ if __name__ == "__main__":
     from test import accounts
 
     # 获取 Steam 私密信息
-    # username, password, api_key, steam_id = accounts \
-    #     .get_private_info_by_steam_id(no=2)
-    # r_steam = r_steam(steam_id, username, password, api_key=api_key)
-    # r_steam.init()
-    # print(r_steam.guard.get_two_factor_code())
-    # response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
-    # if (username.lower() in response.lower()):
-    #     print("OK")
-    #     confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
-    #     print(confirmations)
-    # else:
-    #     print("NG")
+    username, password, api_key, steam_id = accounts \
+        .get_private_info_by_steam_id(no=3)
+    r_steam = r_steam(steam_id, username, password, api_key=api_key)
+    r_steam.init()
+    response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
+    if (username.lower() in response.lower()):
+        print("OK")
+        confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
+        print(confirmations)
+        for confirmation in confirmations:
+            print(confirmation._id)
+            print(r_steam.guard.get_confirmation_info(r_steam._session, confirmation))
+            # print(r_steam.guard.cancel_confirmation(r_steam._session, confirmation))
+    else:
+        print("NG")
