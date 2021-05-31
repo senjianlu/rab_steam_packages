@@ -83,7 +83,7 @@ class r_steam():
         self.guard = guard.r_steam_guard(self._steam_id)
         # Steam Login 登录模块（暂时不使用类只使用其 Session 登录方法）
         self._session = login.login_by_session(
-            self._username, self._password, self.guard.get_two_factor_code())
+            self._username, self._password, self.guard)
         # Steam Info 账户信息模块
         # self.info = info.r_steam_info()
         # Steam Maket 市场模块
@@ -105,14 +105,15 @@ if __name__ == "__main__":
     from test import accounts
 
     # 获取 Steam 私密信息
-    username, password, api_key, steam_id = accounts \
-        .get_private_info_by_steam_id(no=2)
-    r_steam = r_steam(steam_id, username, password, api_key=api_key)
-    r_steam.init()
-    response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
-    if (username.lower() in response.lower()):
-        print("OK")
-        confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
-        print(confirmations)
-    else:
-        print("NG")
+    # username, password, api_key, steam_id = accounts \
+    #     .get_private_info_by_steam_id(no=2)
+    # r_steam = r_steam(steam_id, username, password, api_key=api_key)
+    # r_steam.init()
+    # print(r_steam.guard.get_two_factor_code())
+    # response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
+    # if (username.lower() in response.lower()):
+    #     print("OK")
+    #     confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
+    #     print(confirmations)
+    # else:
+    #     print("NG")

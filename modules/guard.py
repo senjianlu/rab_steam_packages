@@ -173,7 +173,7 @@ class r_steam_guard():
         # 待确认交易类列表
         confirmations = []
         # 访问该页面所需的对象
-        params = generate_params(tag)
+        params = self.generate_params(tag)
         headers = {
             "X-Requested-With": "com.valvesoftware.android.steam.community"
         }
@@ -215,7 +215,7 @@ class r_steam_guard():
     """
     def get_confirmation_info(self, logined_session, confirmation):
         tag = "details" + confirmation._id
-        params = generate_params(tag)
+        params = self.generate_params(tag)
         response = logined_session.get(
             api.STEAM.URL.COMMUNITY+"/details/"+confirmation._id, params=params)
         return json.loads(response)["html"]
