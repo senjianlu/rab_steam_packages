@@ -107,21 +107,42 @@ def login_by_session(username, password, guard, session=None):
 -------
 @return:
 """
-def login_by_selenium(username, password, driver, btn_xpath, guard=None):
+def login_by_selenium(username,
+                      password,
+                      driver,
+                      login_btn_xpath=None,
+                      login_js=None,
+                      guard=None):
     # 主 Driver
     login_driver = driver
     # 记录 Steam 登录按钮点击前的页面，登录后切换回原窗口
     print("需要 Steam 登录的网页标题：" + login_driver.title)
     handle_before_login = login_driver.current_window_handle
     handles_num_before_login = len(login_driver.window_handles)
-    # 点击登录按钮
-    login_driver.find_element_by_xpath(btn_xpath).click()
-    # 等待 1 秒
-    time.sleep(1)
-    # 循环所有窗口以捕获 Steam 登录窗口
-    for window_handle in login_driver.window_handles:
-        login_driver.switch_to.window(window_handle)
-        if ("steam community" == login_driver.title.lower().strip()):
+    # 点击登录按钮以打开 Steam 登录界面情况下
+    if (login_btn_xpath):
+        try:
+            login_driver.find_element_by_xpath(login_btn_xpath).click()
+        except Exception as e:
+            print("无法点击页面上使用 Steam 登录的按钮！XPath:{}".format(login_btn_xpath))
+            return False
+    # 执行 JS 以打开 Steam 登录界面情况下
+    elif(login_js):
+        try:
+            login_driver.execute_script(login_js)
+        except Exception as e:
+            print("执行使用 Steam 登录的 JS 出错！JS：{}".format(login_js))
+            return False
+    # 最多等待 20 秒，循环所有窗口以捕获 Steam 登录窗口
+    for _ in range(0, 20):
+        get_flg = False
+        time.sleep(1)
+        for window_handle in login_driver.window_handles:
+            login_driver.switch_to.window(window_handle)
+            if ("steam community" == login_driver.title.lower().strip()):
+                get_flg = True
+                break
+        if (get_flg):
             break
     print("切换至 Steam 登录窗口，当前窗口标题：" + login_driver.title)
     # 等待登录按钮出现
@@ -183,7 +204,7 @@ def login_by_selenium(username, password, driver, btn_xpath, guard=None):
     login_driver.switch_to.window(handle_before_login)
     print("已经切换回原窗口，当前窗口标题：" + login_driver.title)
     # 返回
-    return login_driver
+    return True
     
 
 """
