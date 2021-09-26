@@ -2,7 +2,7 @@
 # -*- coding:UTF-8 -*-
 #
 # @AUTHOR: Rabbir
-# @FILE: /root/GitHub/rab_steam_packages/main/offer.py
+# @FILE: /root/GitHub/rab_steam_packages/module/offer.py
 # @DATE: 2021/05/21 Fri
 # @TIME: 15:38:42
 #
@@ -13,7 +13,7 @@ import json
 import requests
 import sys
 sys.path.append("..")
-from modules import api
+from module import api
 
 
 """

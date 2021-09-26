@@ -12,7 +12,7 @@
 import sys
 sys.path.append("..")
 import accounts
-from modules import offer
+from module import offer
 
 
 """

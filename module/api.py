@@ -2,7 +2,7 @@
 # -*- coding:UTF-8 -*-
 #
 # @AUTHOR: Rabbir
-# @FILE: D:\GitHub\rab_steam_packages\modules\api.py
+# @FILE: D:\GitHub\rab_steam_packages\module\api.py
 # @DATE: 2021/05/21 周五
 # @TIME: 22:30:34
 #

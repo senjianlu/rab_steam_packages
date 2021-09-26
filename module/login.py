@@ -2,7 +2,7 @@
 # -*- coding:UTF-8 -*-
 #
 # @AUTHOR: Rabbir
-# @FILE: /root/GitHub/rab_steam_packages/main/login.py
+# @FILE: /root/GitHub/rab_steam_packages/module/login.py
 # @DATE: 2021/05/21 Fri
 # @TIME: 15:37:58
 #
@@ -16,7 +16,7 @@ import base64
 import requests
 import sys
 sys.path.append("..")
-from modules.api import STEAM
+from module.api import STEAM
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait

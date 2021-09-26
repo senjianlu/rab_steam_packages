@@ -1,4 +1,8 @@
+# dev 分支下忽略 test 模块
+test/*.py
+
+# 忽略令牌文件
 maFiles/7656*.maFile
+
+# 忽略字节码文件
 __pycache__
-test/accounts.py
-test/driver.py

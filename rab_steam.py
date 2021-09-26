@@ -10,10 +10,10 @@
 
 
 import configparser
-from modules import chat
-from modules import guard
-from modules import login
-from modules import offer
+from module import chat
+from module import guard
+from module import login
+from module import offer
 
 
 """
@@ -101,22 +101,22 @@ class r_steam():
 """
 if __name__ == "__main__":
 
-    from modules import api
+    from module import api
     from test import accounts
 
-    # 获取 Steam 私密信息
-    username, password, api_key, steam_id = accounts \
-        .get_private_info_by_steam_id(no=3)
-    r_steam = r_steam(steam_id, username, password, api_key=api_key)
-    r_steam.init()
-    response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
-    if (username.lower() in response.lower()):
-        print("OK")
-        confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
-        print(confirmations)
-        for confirmation in confirmations:
-            print(confirmation._id)
-            print(r_steam.guard.get_confirmation_info(r_steam._session, confirmation))
-            # print(r_steam.guard.cancel_confirmation(r_steam._session, confirmation))
-    else:
-        print("NG")
+    # # 获取 Steam 私密信息
+    # username, password, api_key, steam_id = accounts \
+    #     .get_private_info_by_steam_id(no=3)
+    # r_steam = r_steam(steam_id, username, password, api_key=api_key)
+    # r_steam.init()
+    # response = r_steam._session.get(api.STEAM.URL.COMMUNITY).text
+    # if (username.lower() in response.lower()):
+    #     print("OK")
+    #     confirmations = r_steam.guard.get_confirmations(r_steam._session, "conf")
+    #     print(confirmations)
+    #     for confirmation in confirmations:
+    #         print(confirmation._id)
+    #         print(r_steam.guard.get_confirmation_info(r_steam._session, confirmation))
+    #         # print(r_steam.guard.cancel_confirmation(r_steam._session, confirmation))
+    # else:
+    #     print("NG")

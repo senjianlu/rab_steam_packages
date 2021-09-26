@@ -2,7 +2,7 @@
 # -*- coding:UTF-8 -*-
 #
 # @AUTHOR: Rabbir
-# @FILE: /root/GitHub/rab_steam_packages/main/guard.py
+# @FILE: /root/GitHub/rab_steam_packages/module/guard.py
 # @DATE: 2021/05/21 Fri
 # @TIME: 15:40:02
 #
@@ -19,7 +19,7 @@ import base64
 import struct
 from hashlib import sha1
 from bs4 import BeautifulSoup
-from modules import api
+from module import api
 
 
 """
