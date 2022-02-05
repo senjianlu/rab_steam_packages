@@ -10,4 +10,5 @@
 
 
 import sys
+sys.path.append("rab_steam_packages") if "rab_steam_packages" not in sys.path else True
 sys.path.append("../rab_steam_packages") if "../steam_steam_packages" not in sys.path else True
